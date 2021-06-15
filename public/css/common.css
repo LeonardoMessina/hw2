@@ -244,6 +244,12 @@ nav a:active{
   border-bottom-right-radius: 0.5em;
 }
 
+#uploadError{
+  visibility: visible;
+  color: rgb(214, 15, 15);
+  font-size: 1.2rem;
+}
+
 footer {
   background-color: #363940;
   padding: 1rem 0;

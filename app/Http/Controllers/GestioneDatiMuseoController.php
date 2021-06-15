@@ -56,11 +56,10 @@ class GestioneDatiMuseoController extends Controller {
 		$error=array();
 
 		$postType=request("type");
-		$fullCheck=$postType=="save";
 
 		$filePath='';
 
-		if(($fullCheck || !empty(request("nomeMuseo"))) && (strlen(request('nomeMuseo'))<4 || strlen(request('nomeMuseo'))>30)) {
+		if(strlen(request('nomeMuseo'))<4 || strlen(request('nomeMuseo'))>30) {
 			$error[] = "Nome del museo non valido";
 		}else{
 			$museum=Museum::find(session('id_museo'));
@@ -84,7 +83,7 @@ class GestioneDatiMuseoController extends Controller {
 			$error[] = "La longitudine deve essere un numero";
 		}
 
-		if ($fullCheck && empty(request('tipoMuseo'))) {
+		if (empty(request('tipoMuseo'))) {
 			$error[] = "Si deve inserire il tipo del museo";
 		}
 
@@ -98,24 +97,24 @@ class GestioneDatiMuseoController extends Controller {
 			}
 		}
 
-		if($fullCheck || !empty(request("telefono1"))){
-			$telefono1=$this->must_be_numbers(request("telefono1"));
-			if (strlen($telefono1) > 15 || strlen($telefono1) < 8) {
-				$error[] = "Il primo numero di telefono non è valido";
-			}else{
-				$telefono1 = strtolower($telefono1);
-				$query=User::where('id', '<>', session('id_utente'))
-					->where(function($query) use ($telefono1){
-						$query->where('telefono1', $telefono1)
-						->orWhere('telefono2', $telefono1);
-					})
-					->first()
-				;
-				if ($query) {
-					$error[] = "Il primo numero di telefono è già registrato";
-				}
+		
+		$telefono1=$this->must_be_numbers(request("telefono1"));
+		if (strlen($telefono1) > 15 || strlen($telefono1) < 8) {
+			$error[] = "Il primo numero di telefono non è valido";
+		}else{
+			$telefono1 = strtolower($telefono1);
+			$query=User::where('id', '<>', session('id_utente'))
+				->where(function($query) use ($telefono1){
+					$query->where('telefono1', $telefono1)
+					->orWhere('telefono2', $telefono1);
+				})
+				->first()
+			;
+			if ($query) {
+				$error[] = "Il primo numero di telefono è già registrato";
 			}
 		}
+
 
 		if(!empty(request("telefono2"))){
 			$telefono2=$this->must_be_numbers(request("telefono2"));
@@ -142,7 +141,7 @@ class GestioneDatiMuseoController extends Controller {
 
 		if(count($error)==0 && $postType=="save"){
 			$file=request('immagineMuseo');
-			if ($file!=null && $file->isValid()){
+			if ($file && $file->isValid()){
 				$type = exif_imagetype($file->getRealPath());
 				$allowedExt = array(IMAGETYPE_PNG => 'png', IMAGETYPE_JPEG => 'jpg');
 				if (isset($allowedExt[$type])) {

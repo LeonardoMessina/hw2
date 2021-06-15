@@ -73,6 +73,7 @@
                 <div>
                     <input type='file' id='upload_original' name='immagineMuseo' accept='.jpg, .jpeg, image/png'/>
                     <div id="upload"><div class="file_name">Seleziona un file...</div><div class="file_size"></div></div>
+                    <div id="uploadError" class="error"></div>
                 </div>    
             </div>
             <div id="errors">

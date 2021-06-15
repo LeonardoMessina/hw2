@@ -72,7 +72,7 @@ class GestioneOpereController extends Controller {
 
 		if(count($error)==0 && request("type")=="save"){
 			$file=request('immagineOpera');
-			if ($file!=null && $file->isValid()){
+			if($file && $file->isValid()){
 				$type = exif_imagetype($file->getRealPath());
 				$allowedExt = array(IMAGETYPE_PNG => 'png', IMAGETYPE_JPEG => 'jpg');
 				if (isset($allowedExt[$type])) {

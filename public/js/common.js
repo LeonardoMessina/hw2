@@ -52,6 +52,9 @@ function setNumeric(elementId){
 }
 
 function checkUpload(){
+    const error=document.getElementById('uploadError');
+    error.textContent='';
+
     const upload_original = document.getElementById('upload_original');
     if(upload_original.files.length===0)
         return false;
@@ -62,9 +65,11 @@ function checkUpload(){
     document.querySelector('#upload .file_size').textContent = mb_size.toFixed(2)+" MB";
     const ext = upload_original.files[0].name.split('.').pop();
 
-    if (o_size >= 7000000) {
+    if (o_size >= 10000000) {
+        error.textContent="L'immagine non deve avere dimensioni maggiori di 10MB";
         return false;
     } else if (!['jpeg', 'jpg', 'png'].includes(ext.toLowerCase()))  {
+        error.textContent="I formati consentiti sono .png, .jpeg e .jpg";
         return false;
     } else {
         return true;

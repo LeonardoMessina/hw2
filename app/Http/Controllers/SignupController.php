@@ -181,7 +181,7 @@ class SignupController extends Controller {
 				return $this->postResult("1",$error,false);
 
 			$file=request('immagineMuseo');
-			if ($file!=null && $file->isValid()){
+			if ($file && $file->isValid()){
 				$type = exif_imagetype($file->getRealPath());
 				$allowedExt = array(IMAGETYPE_PNG => 'png', IMAGETYPE_JPEG => 'jpg');
 				if (isset($allowedExt[$type])) {

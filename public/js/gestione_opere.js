@@ -98,7 +98,7 @@ function checkPage(event,saveCheck){
     data.append('annoUltimaturaOpera',document.getElementById('annoUltimaturaOpera').value);
     data.append('annoUltimaturaOperaSegno',annoUltimaturaOperaAC.checked ? -1 : 1);
 
-    if(saveCheck && isOk)
+    if(saveCheck && isOk && upload_original.value.length>0)
         data.append('immagineOpera', upload_original.files[0]);
 
     data.append('type', saveCheck ? 'save' : 'check');
